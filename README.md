@@ -1,5 +1,7 @@
 # spring-boot-3-keycloak
 
+Keycloak version# 22.0.5
+
 #### Keycloak user details
 
 ```
