@@ -10,6 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.teqmonic.keycloak.bean.MenuItemCategory;
+import com.teqmonic.keycloak.bean.MenuType;
 import com.teqmonic.keycloak.entity.Menu;
 import com.teqmonic.keycloak.entity.MenuItem;
 import com.teqmonic.keycloak.entity.Restaurant;
@@ -37,15 +39,15 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 	
- /**	@Transactional
+ 	@Transactional
 	@Bean
 	CommandLineRunner runner() {
 		
 		return arg -> {
 			
 			// Set up restaurant
-			Restaurant restaurant = Restaurant.builder().name("Franklin").build();
-			Menu menu =	Menu.builder().name("Lunch").restaurant(restaurant).build();			
+			Restaurant restaurant = Restaurant.builder().name("Franklin").city("NewYork").cuisine("American").build();
+			Menu menu =	Menu.builder().type(MenuType.BREAKFAST).restaurant(restaurant).build();			
 			restaurant.setMenus(List.of(menu));		
 		
 			restaurantRepository.save(restaurant); 
@@ -60,7 +62,7 @@ public class Application {
 			Optional<Menu> menu1 = menuRepository.findById(menu.getId());
 			if(menu1.isPresent()) {
 			    log.info("Menu {} ", menu1);
-				MenuItem menuItem = MenuItem.builder().name("Coffee").price(2.50).build();
+				MenuItem menuItem = MenuItem.builder().name("Coffee").price(2.50).category(MenuItemCategory.SNACK).build();
 				menu1.get().setItems(Set.of(menuItem));	
 				menuRepository.save(menu1.get());
 				log.info("Menu item {} has been set up", menuItem);
@@ -73,9 +75,9 @@ public class Application {
 				}
 				log.info("Menu items count {}", menuItemRepository.count());
 				// Delete Menu, should delete menu items and its mappings
-				menuRepository.delete(menu1.get());
-				log.info("Menu {} has been deleted successfully", menu1);
-				log.info("Menu items count {} after menu deletion", menuItemRepository.count());
+				// menuRepository.delete(menu1.get());
+				// log.info("Menu {} has been deleted successfully", menu1);
+				// log.info("Menu items count {} after menu deletion", menuItemRepository.count());
 			}
 		
 			
@@ -85,6 +87,6 @@ public class Application {
 		
 		
 	}
-	**/
+	
 
 }

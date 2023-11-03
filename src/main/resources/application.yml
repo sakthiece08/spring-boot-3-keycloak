@@ -15,3 +15,5 @@ spring:
     
 logging.level.org.springframework.security: TRACE
 server.error.include-stacktrace: never
+
+spring.security.oauth2.resourceserver.jwt.issuer-uri: http://localhost:8000/realms/Teqmonic

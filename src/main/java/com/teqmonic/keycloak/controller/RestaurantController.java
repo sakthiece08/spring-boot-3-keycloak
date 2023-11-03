@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,6 +55,7 @@ public class RestaurantController {
 	
 	private final MenuItemRepository menuItemRepository;
 
+	@PreAuthorize("hasRole('admin')")
 	@PostMapping("restaurant")
 	public ResponseEntity<HttpStatus> createRestaurant(@RequestBody RestaurantRequest request) {
 		log.info("Create restaurant {}", request);
@@ -62,11 +64,18 @@ public class RestaurantController {
 			throw new RuntimeException("Restaurant - " + request.name() + " is already present");
 		}
 
-		restaurantRepository.save(Restaurant.builder().name(request.name()).build());
+		restaurantRepository.save(Restaurant.builder().name(request.name()).city(request.city()).cuisine(request.cuisine()).build());
 		log.info("Create restaurant for {} has been completed", request);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
+	// public API
+	@GetMapping("public/restaurant")
+	public Iterable<Restaurant> getRestaurants() {
+		return restaurantRepository.findAll();
+	}
+	
+	@PreAuthorize("hasRole('manager')")
 	@PostMapping("menu")
 	public ResponseEntity<HttpStatus> addMenu(@RequestBody MenuRequest request) {
 		log.info("Add menu {}", request);
@@ -93,6 +102,7 @@ public class RestaurantController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
+	@PreAuthorize("hasRole('owner')")
 	@PatchMapping("updatePrice/{menu_item_id}/latest-price/{price}")
 	public ResponseEntity<HttpStatus> updatePrice(@PathVariable(name = "menu_item_id", required = true) int menuItemId,
 			@PathVariable(name = "price", required = true)  double price) {
@@ -105,7 +115,8 @@ public class RestaurantController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@GetMapping("getAllMenus")
+	// public API
+	@GetMapping("public/menus")
 	public ResponseEntity<List<RestaurantResponse>> getAllMenus() {
 		
 		List<Restaurant> restaurant = (List<Restaurant>) restaurantRepository.findAll();
@@ -118,7 +129,7 @@ public class RestaurantController {
 				List<MenuItemResponse> menuItemList = new ArrayList<>();
 				MenuResponse menuResponse = MenuResponse.builder().name(menu.getType().getValue()).build();
 				for (MenuItem item : menu.getItems()) {
-					menuItemList.add(MenuItemResponse.builder().name(item.getName()).price(item.getPrice()).build());
+					menuItemList.add(MenuItemResponse.builder().name(item.getName()).price(item.getPrice()).itemId(item.getId()).build());
 				}
 				MenuResponseBuilder menuBuilder = menuResponse.toBuilder();
 				menuList.add(menuBuilder.menuItem(menuItemList).build());
@@ -128,35 +139,8 @@ public class RestaurantController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
-	@GetMapping("getMenu/{restaurant_id}")
-	public ResponseEntity<RestaurantResponse> getRestaurentMenus(@PathVariable(name = "restaurant_id", required = true) int restaurantId) {
-		
-		Optional<Restaurant> restaurant =restaurantRepository.findById(restaurantId);
-		
-		RestaurantResponse restaurantResponse = new RestaurantResponse();
-		
-	    restaurant.ifPresent(rest -> restaurantResponse.setName(rest.getName()));
-		
-		
-		List<MenuResponse> obj = Optional.ofNullable(restaurant)
-		.map(res -> res.get())
-		.map(res -> res.getMenus())
-		.map(List::stream).orElseGet(Stream::empty)
-		.map(menu -> {
-			MenuResponse menuResponse = MenuResponse.builder().name(menu.getType().getValue()).build();
-		
-			List<MenuItemResponse> menuItemList = menu.getItems().stream().map(
-					item -> MenuItemResponse.builder().name(item.getName()).price(item.getPrice()).build()).toList();	
-			
-			MenuResponseBuilder menuBuilder = menuResponse.toBuilder();
-			return menuBuilder.menuItem(menuItemList).build();
-		}).toList();
-
-		restaurantResponse.setMenu(obj);
-		return new ResponseEntity<>(restaurantResponse, HttpStatus.OK);			
-	}
-	
-	@GetMapping("getMenuClassification/{restaurant_id}")
+	// public API
+	@GetMapping("public/menu-classification/{restaurant_id}")
 	public ResponseEntity<RestaurantResponseClassification> getMenuClassification(@PathVariable(name = "restaurant_id", required = true) int restaurantId) {
 		
 		Optional<Restaurant> restaurant =restaurantRepository.findById(restaurantId);
@@ -190,7 +174,7 @@ public class RestaurantController {
 				Iterator<MenuItem> it = itemSet.iterator();
 				while(it.hasNext()) {
 					MenuItem item = it.next();
-					menuItemResponseList.add(MenuItemResponse.builder().name(item.getName()).price(item.getPrice()).build());
+					menuItemResponseList.add(MenuItemResponse.builder().name(item.getName()).price(item.getPrice()).itemId(item.getId()).build());
 				}
 				// sort items by price
 				Collections.sort(menuItemResponseList, (a, b) -> Double.compare(a.price(), b.price()));
