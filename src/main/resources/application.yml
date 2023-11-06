@@ -17,3 +17,11 @@ logging.level.org.springframework.security: TRACE
 server.error.include-stacktrace: never
 
 spring.security.oauth2.resourceserver.jwt.issuer-uri: http://localhost:8000/realms/Teqmonic
+
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: springboot-be
+      client-secret: TYPasarv7yqXtTn21KyTUZmD5LE1ds46
+      # swagger-ui custom path
+      path: /swagger-ui.html

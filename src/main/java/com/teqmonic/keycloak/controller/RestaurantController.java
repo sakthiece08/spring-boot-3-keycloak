@@ -40,6 +40,7 @@ import com.teqmonic.keycloak.repository.MenuItemRepository;
 import com.teqmonic.keycloak.repository.MenuRepository;
 import com.teqmonic.keycloak.repository.RestaurantRepository;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,6 +48,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/")
+@SecurityRequirement(name = "Keycloak")
 public class RestaurantController {
 
 	private final RestaurantRepository restaurantRepository;

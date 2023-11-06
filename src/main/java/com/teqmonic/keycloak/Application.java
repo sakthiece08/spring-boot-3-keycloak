@@ -19,9 +19,18 @@ import com.teqmonic.keycloak.repository.MenuItemRepository;
 import com.teqmonic.keycloak.repository.MenuRepository;
 import com.teqmonic.keycloak.repository.RestaurantRepository;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
+@SecurityScheme(name = "Keycloak",
+                openIdConnectUrl = "http://localhost:8000/realms/Teqmonic/.well-known/openid-configuration",
+                scheme = "bearer",
+                type = SecuritySchemeType.OPENIDCONNECT,
+                in = SecuritySchemeIn.HEADER
+		)
 @Slf4j
 @SpringBootApplication
 public class Application {
