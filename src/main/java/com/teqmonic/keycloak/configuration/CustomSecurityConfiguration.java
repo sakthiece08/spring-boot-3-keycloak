@@ -4,6 +4,7 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -24,6 +25,7 @@ public class CustomSecurityConfiguration {
 	//private JwtAuthConverter jwtAuthConverter;
 
 	@Bean
+	@Order(1)
 	SecurityFilterChain adminSecurityFilterChain(HttpSecurity http) throws Exception {
 		
 		return http
@@ -31,6 +33,21 @@ public class CustomSecurityConfiguration {
 		        .securityMatcher(antMatcher("/api/**"))
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/public/**")).permitAll())
+				.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.oauth2ResourceServer(
+						server -> server.jwt(Customizer.withDefaults()))
+						//server -> server.jwt(configurer -> configurer.jwtAuthenticationConverter(jwtAuthConverter)))
+		        .build();
+	}
+	
+	@Bean
+	@Order(2)
+	SecurityFilterChain keyCloakSecurityFilterChain(HttpSecurity http) throws Exception {
+		
+		return http
+				.csrf(c -> c.disable())
+		        .securityMatcher(antMatcher("/keycloak/**"))
 				.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.oauth2ResourceServer(

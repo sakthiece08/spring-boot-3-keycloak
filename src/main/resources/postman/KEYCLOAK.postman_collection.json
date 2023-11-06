@@ -1,0 +1,268 @@
+{
+	"info": {
+		"_postman_id": "3ab0a712-09f7-4722-825a-ff4c90e1b96e",
+		"name": "KEYCLOAK",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2931585"
+	},
+	"item": [
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "refresh_token",
+							"value": "{{refresh_token}}",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "springboot-be",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "TYPasarv7yqXtTn21KyTUZmD5LE1ds46",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/realms/Teqmonic/protocol/openid-connect/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"realms",
+						"Teqmonic",
+						"protocol",
+						"openid-connect",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let jsonData = pm.response.json();",
+							"",
+							"if(pm.response.code === 200) {",
+							"    pm.collectionVariables.set(\"access_token\", jsonData.access_token);",
+							"    pm.collectionVariables.set(\"refresh_token\", jsonData.refresh_token);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "springboot-be",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "TYPasarv7yqXtTn21KyTUZmD5LE1ds46",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "temp",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/realms/Teqmonic/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"realms",
+						"Teqmonic",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let jsonData = pm.response.json();",
+							"",
+							"if(pm.response.code === 200) {",
+							"    pm.collectionVariables.set(\"access_token\", jsonData.access_token);",
+							"    pm.collectionVariables.set(\"refresh_token\", jsonData.refresh_token);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "springboot-be",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "TYPasarv7yqXtTn21KyTUZmD5LE1ds46",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "refresh_token",
+							"type": "text"
+						},
+						{
+							"key": "refresh_token",
+							"value": "{{refresh_token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/realms/Teqmonic/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"realms",
+						"Teqmonic",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Introspect Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let jsonData = pm.response.json();",
+							"",
+							"if(pm.response.code === 200) {",
+							"    pm.collectionVariables.set(\"access_token\", jsonData.access_token);",
+							"    pm.collectionVariables.set(\"refresh_token\", jsonData.refresh_token);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "springboot-be",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "TYPasarv7yqXtTn21KyTUZmD5LE1ds46",
+							"type": "text"
+						},
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/realms/Teqmonic/protocol/openid-connect/token/introspect",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"realms",
+						"Teqmonic",
+						"protocol",
+						"openid-connect",
+						"token",
+						"introspect"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": ""
+		},
+		{
+			"key": "refresh_token",
+			"value": ""
+		}
+	]
+}

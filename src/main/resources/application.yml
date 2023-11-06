@@ -25,3 +25,12 @@ springdoc:
       client-secret: TYPasarv7yqXtTn21KyTUZmD5LE1ds46
       # swagger-ui custom path
       path: /swagger-ui.html
+      
+# Keycloak client API calls
+keycloak:
+  realm: Teqmonic
+  server: http://localhost:8000
+  client-id: admin-cli
+  grant-type: password
+  user-name: clientcli
+  password: system 

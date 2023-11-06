@@ -1,0 +1,459 @@
+{
+	"info": {
+		"_postman_id": "a0c12812-8531-47eb-adda-40293203f1b8",
+		"name": "Keycloak-Restaurant API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2931585"
+	},
+	"item": [
+		{
+			"name": "Create restaurant",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Eng Gateway\",\n    \"city\": \"Boston\",\n    \"cuisine\": \"British\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/restaurant",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"restaurant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List of restaurants",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/public/restaurant",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"public",
+						"restaurant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add menu - breakfast",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurant_id\": 2,\n    \"menu_type\": \"BREAKFAST\",\n    \"menu_items\": [\n        {\n            \"name\": \"Burger\",\n            \"price\": 9.2,\n            \"category\": \"SNACK\"\n        },\n        {\n            \"name\": \"Falafal\",\n            \"price\": 2.1,\n            \"category\": \"VEG\"\n        }\n    ]\n   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/menu",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"menu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add menu - lunch",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurant_id\": 1,\n    \"menu_type\": \"LUNCH\",\n    \"menu_items\": [\n        {\n            \"name\": \"Pasta\",\n            \"price\": 99,\n            \"category\": \"VEG\"\n        },\n        {\n            \"name\": \"Rice\",\n            \"price\": 9.91,\n            \"category\": \"VEG\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/menu",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"menu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add menu - Dinner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurant_id\": 1,\n    \"menu_type\": \"DINNER\",\n    \"menu_items\": [\n        {\n            \"name\": \"Noodles2\",\n            \"price\": 11,\n            \"category\": \"MEAT\"\n        },\n        {\n            \"name\": \"Rice2\",\n            \"price\": 41,\n            \"category\": \"VEG\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/menu",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"menu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update menu item price",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/updatePrice/3/latest-price/7.9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"updatePrice",
+						"3",
+						"latest-price",
+						"7.9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Menus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/public/menus",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"public",
+						"menus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Menu classification",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/public/menu-classification/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"public",
+						"menu-classification",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "token-keycloak",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let jsonData = pm.response.json();",
+							"",
+							"if(pm.response.code === 200) {",
+							"    pm.collectionVariables.set(\"access_token\", jsonData.access_token);",
+							"    pm.collectionVariables.set(\"refresh_token\", jsonData.refresh_token);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "springboot-be",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "TYPasarv7yqXtTn21KyTUZmD5LE1ds46",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/realms/Teqmonic/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"realms",
+						"Teqmonic",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Keycloak user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/keycloak/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"keycloak",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Keycloak user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"first_name\": \"System1\",\n\"last_name\" : \"\",\n\"user_name\" : \"system1\",\n\"email\" : \"system1@system.com\",\n\"password\" : \"password\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/keycloak/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"keycloak",
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "jwt_token",
+			"value": ""
+		},
+		{
+			"key": "access_token",
+			"value": ""
+		},
+		{
+			"key": "refresh_token",
+			"value": ""
+		}
+	]
+}
