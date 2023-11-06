@@ -52,7 +52,6 @@ public class CustomSecurityConfiguration {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.oauth2ResourceServer(
 						server -> server.jwt(Customizer.withDefaults()))
-						//server -> server.jwt(configurer -> configurer.jwtAuthenticationConverter(jwtAuthConverter)))
 		        .build();
 	}
 	
