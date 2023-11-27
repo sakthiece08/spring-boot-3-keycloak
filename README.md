@@ -1,6 +1,10 @@
 # spring-boot-3-keycloak
 
-Keycloak version# 22.0.5
+Keycloak version# 23.0.0 https://www.keycloak.org/getting-started/getting-started-zip#_create_an_admin_user
+
+Keycloak dependency:
+- Java version: OpenJDK 17
+- Database: PostgreSQL
 
 #### Keycloak user details
 
